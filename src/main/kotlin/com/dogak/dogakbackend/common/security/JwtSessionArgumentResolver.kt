@@ -27,7 +27,6 @@ class JwtSessionArgumentResolver(
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any {
-        println("resolver")
         val paramType = parameter.parameterType
         val path = String.format("$.%s", "info.email")
 

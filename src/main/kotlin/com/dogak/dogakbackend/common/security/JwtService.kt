@@ -55,8 +55,6 @@ class DefaultJwtService : JwtService {
                 .build()
                 .parseClaimsJws(token)
             val expiration = claims.body.expiration
-            println(expiration)
-            println(claims.body.expiration)
             System.currentTimeMillis() <= expiration.time
         } catch (e: Exception) {
             false
