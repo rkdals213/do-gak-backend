@@ -11,5 +11,4 @@ class PurchaseTime(
 
     @Enumerated(EnumType.STRING)
     var month: Month
-) {
-}
+)

@@ -15,5 +15,4 @@ class ProductInfo(
 
     @Embedded
     var purchaseTime: PurchaseTime
-) {
-}
+)

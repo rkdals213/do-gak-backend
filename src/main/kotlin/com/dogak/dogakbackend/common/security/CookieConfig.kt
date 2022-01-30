@@ -13,7 +13,7 @@ data class CookieConfig(
         val cookie = Cookie(name, value)
         cookie.maxAge = expires;
         cookie.secure = secure;
-        cookie.isHttpOnly = true;
+        cookie.isHttpOnly = false;
         cookie.path = "/";
         return cookie;
     }
