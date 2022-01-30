@@ -10,6 +10,8 @@ import java.nio.charset.StandardCharsets
 import java.security.Key
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.time.ZoneOffset
+import java.util.*
 
 interface JwtService {
     fun create(payload: Payload): String
@@ -33,9 +35,10 @@ class DefaultJwtService : JwtService {
 
     override fun create(payload: Payload): String = Jwts.builder()
         .setHeaderParam("typ", "JWT")
-//        .setExpiration(Date.from(payload.exp.toInstant(ZoneOffset.UTC)))
+        .setExpiration(Date.from(payload.exp.toInstant(ZoneOffset.UTC)))
         .signWith(secretKey)
-        .claim("info", payload).compact()
+        .claim("info", payload.memberPayload)
+        .compact()
 
     override fun isUsable(token: String): Boolean {
         return checkJwt(token)
@@ -52,6 +55,8 @@ class DefaultJwtService : JwtService {
                 .build()
                 .parseClaimsJws(token)
             val expiration = claims.body.expiration
+            println(expiration)
+            println(claims.body.expiration)
             System.currentTimeMillis() <= expiration.time
         } catch (e: Exception) {
             false

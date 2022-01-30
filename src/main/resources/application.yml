@@ -21,6 +21,9 @@ logging:
     org.hivernate.type: trace
 #    org.springframework.transaction.interceptor: trace
 
+server:
+  servlet:
+    context-path: /api
 
 front:
   url: http://localhost:3000

@@ -1,7 +1,9 @@
 package com.dogak.dogakbackend.common.security
 
+import java.time.LocalDateTime
+
 data class Payload(
-//    val exp: LocalDateTime,
+    val exp: LocalDateTime,
     val memberPayload: MemberPayload
 )
 

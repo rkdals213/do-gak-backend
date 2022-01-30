@@ -11,6 +11,7 @@ class JwtInterceptor(private val jwtService: JwtService, private val COOKIE_KEY:
         response: HttpServletResponse,
         handler: Any
     ): Boolean {
+        println("jwt interceptor")
         if (handler !is HandlerMethod || !isAuthenticationPresent(handler)) {
             return true
         }

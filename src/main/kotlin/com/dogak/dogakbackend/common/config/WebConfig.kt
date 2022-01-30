@@ -28,7 +28,7 @@ class WebConfig(
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
             .allowedOriginPatterns(frontendUrl.url)
-            .allowCredentials(false)
+            .allowCredentials(true)
     }
 
     @Bean
