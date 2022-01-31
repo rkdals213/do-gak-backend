@@ -1,10 +1,11 @@
 package com.dogak.dogakbackend.app.member.api
 
+import com.dogak.dogakbackend.app.member.application.MemberService
+import com.dogak.dogakbackend.app.member.dto.KakaoLoginPayload
 import com.dogak.dogakbackend.common.config.WebConfig.Companion.EXPIRATION
 import com.dogak.dogakbackend.common.config.WebConfig.Companion.JWT_COOKIE_NAME
-import com.dogak.dogakbackend.app.member.dto.KakaoLoginPayload
-import com.dogak.dogakbackend.app.member.application.MemberService
 import com.dogak.dogakbackend.common.security.CookieConfig
+import com.dogak.dogakbackend.common.security.CookieManager
 import com.dogak.dogakbackend.common.security.DefaultJwtService
 import com.dogak.dogakbackend.common.security.HttpSupport
 import org.springframework.http.ResponseEntity
@@ -17,23 +18,22 @@ import javax.servlet.http.HttpServletResponse
 @RequestMapping("/session")
 class SessionController(
     private val memberService: MemberService,
-    private val defaultJwtService: DefaultJwtService
+    private val defaultJwtService: DefaultJwtService,
+    private val cookieManager: CookieManager
 ) {
     @PostMapping("/login")
     fun login(@RequestBody kakaoLoginPayload: KakaoLoginPayload, req: HttpServletRequest, res: HttpServletResponse): ResponseEntity<Any> {
         val payload = memberService.login(kakaoLoginPayload)
         val token = defaultJwtService.create(payload)
 
-        val cookie = HttpSupport.createCookie(
-            CookieConfig(
-                name = JWT_COOKIE_NAME,
-                value = token,
-                expires = EXPIRATION,
-                secure = "https" == req.scheme
-            )
-        )
+        cookieManager.setCookie(token, req, res)
 
-        res.addCookie(cookie)
+        return ResponseEntity.ok(payload.memberPayload.name)
+    }
+
+    @DeleteMapping("/logout")
+    fun logout(req: HttpServletRequest, res: HttpServletResponse): ResponseEntity<Any> {
+        cookieManager.removeCookie(req, res)
 
         return ResponseEntity.ok()
             .build()
