@@ -6,8 +6,11 @@ import com.dogak.dogakbackend.app.board.domain.PurchaseTime
 import com.dogak.dogakbackend.app.member.domain.Member
 import java.math.BigDecimal
 import java.time.Month
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 data class CreateBoardRequest(
+    @field:NotBlank
     val title: String,
     val content: String,
     val productInfoRequest: ProductInfoRequest
@@ -18,9 +21,11 @@ data class CreateBoardRequest(
 }
 
 data class ProductInfoRequest(
-    var name: String,
-    var price: BigDecimal,
-    var purchaseTime: PurchaseTimeRequest
+    @field:NotBlank
+    val name: String,
+    @field:NotNull
+    val price: BigDecimal,
+    val purchaseTime: PurchaseTimeRequest
 ) {
     fun toEntity(): ProductInfo {
         return ProductInfo(name, price, purchaseTime.toEntity())
@@ -28,6 +33,7 @@ data class ProductInfoRequest(
 }
 
 data class PurchaseTimeRequest(
+    @NotNull
     val year: Int,
     val month: Month
 ) {
