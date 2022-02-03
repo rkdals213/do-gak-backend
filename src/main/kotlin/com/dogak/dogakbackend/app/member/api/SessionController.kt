@@ -22,13 +22,14 @@ class SessionController(
         val payload = memberService.login(kakaoLoginPayload)
         val token = defaultJwtService.create(payload)
 
-        cookieManager.setCookie(token, req, res)
+//        cookieManager.setCookie(token, req, res)
 
-        return ResponseEntity.ok(payload.memberPayload.name)
+        return ResponseEntity.ok(token)
     }
 
     @DeleteMapping("/logout")
     fun logout(req: HttpServletRequest, res: HttpServletResponse): ResponseEntity<Any> {
+        println(req.headerNames)
         cookieManager.removeCookie(req, res)
 
         return ResponseEntity.ok()
