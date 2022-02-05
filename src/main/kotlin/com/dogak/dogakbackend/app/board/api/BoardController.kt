@@ -4,17 +4,21 @@ import com.dogak.dogakbackend.app.board.application.BoardService
 import com.dogak.dogakbackend.app.board.dto.CreateBoardRequest
 import com.dogak.dogakbackend.app.member.domain.Member
 import com.dogak.dogakbackend.common.security.MemberClaim
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/board")
 class BoardController(
     private val boardService: BoardService
 ) {
+
+    @GetMapping
+    fun findBoards(pageable: Pageable): ResponseEntity<Any> {
+        val boards = boardService.findBoards(pageable)
+        return ResponseEntity.ok(boards)
+    }
 
     @PostMapping
     fun createBoard(@MemberClaim member: Member, @RequestBody createBoardRequest: CreateBoardRequest): ResponseEntity<Any> {

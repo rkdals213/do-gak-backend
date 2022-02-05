@@ -24,4 +24,5 @@ class Board(
 ) {
     val tableTimeStamp: TableTimeStamp = TableTimeStamp()
 
+    constructor(title: String, content: String, writerId: Long, productInfo: ProductInfo) : this(0, title, content, writerId, productInfo)
 }
