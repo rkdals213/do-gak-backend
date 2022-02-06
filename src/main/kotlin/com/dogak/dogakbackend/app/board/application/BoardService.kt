@@ -1,6 +1,8 @@
 package com.dogak.dogakbackend.app.board.application
 
 import com.dogak.dogakbackend.app.board.domain.BoardRepository
+import com.dogak.dogakbackend.app.board.domain.findByIdWithCheck
+import com.dogak.dogakbackend.app.board.dto.BoardDetailResponse
 import com.dogak.dogakbackend.app.board.dto.BoardsResponse
 import com.dogak.dogakbackend.app.board.dto.CreateBoardRequest
 import com.dogak.dogakbackend.app.member.domain.Member
@@ -16,6 +18,10 @@ class BoardService(
     fun findBoards(pageable: Pageable): Page<BoardsResponse> {
         return boardRepository.findAll(pageable)
             .map { BoardsResponse(it) }
+    }
+
+    fun findBoardDetail(id: Long): BoardDetailResponse {
+        return BoardDetailResponse(boardRepository.findByIdWithCheck(id))
     }
 
     @Transactional

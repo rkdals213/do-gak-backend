@@ -13,3 +13,15 @@ data class BoardsResponse(
         board.content
     )
 }
+
+data class BoardDetailResponse(
+    val id: Long,
+    val title: String,
+    val content: String
+) {
+    constructor(board: Board) : this(
+        board.id,
+        board.title,
+        board.content
+    )
+}

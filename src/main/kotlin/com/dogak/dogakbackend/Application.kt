@@ -38,9 +38,6 @@ class InitService(
         @Transactional
         class Init(private val em: EntityManager) {
             fun init() {
-                val member = Member("shinjk213@nate.com", "강민형")
-                em.persist(member)
-
                 for (i in 0..20) {
                     val board = Board("테스트 상품$i", "내용입니다$i", 1, ProductInfo("상품$i", BigDecimal.valueOf(1000), PurchaseTime(2022, Month.JANUARY)))
                     em.persist(board)

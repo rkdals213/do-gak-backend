@@ -20,6 +20,12 @@ class BoardController(
         return ResponseEntity.ok(boards)
     }
 
+    @GetMapping("/{boardId}")
+    fun findBoardDetail(@PathVariable boardId: Long): ResponseEntity<Any> {
+        val board = boardService.findBoardDetail(boardId)
+        return ResponseEntity.ok(board)
+    }
+
     @PostMapping
     fun createBoard(@MemberClaim member: Member, @RequestBody createBoardRequest: CreateBoardRequest): ResponseEntity<Any> {
         return ResponseEntity.ok(boardService.createBoard(member, createBoardRequest))
