@@ -3,6 +3,7 @@ package com.dogak.dogakbackend.app.board.api
 import com.dogak.dogakbackend.app.board.application.BoardService
 import com.dogak.dogakbackend.app.board.dto.CreateBoardRequest
 import com.dogak.dogakbackend.app.member.domain.Member
+import com.dogak.dogakbackend.common.security.Authenticated
 import com.dogak.dogakbackend.common.security.MemberClaim
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
@@ -26,6 +27,7 @@ class BoardController(
         return ResponseEntity.ok(board)
     }
 
+    @Authenticated
     @PostMapping
     fun createBoard(@MemberClaim member: Member, @RequestBody createBoardRequest: CreateBoardRequest): ResponseEntity<Any> {
         return ResponseEntity.ok(boardService.createBoard(member, createBoardRequest))

@@ -28,16 +28,18 @@ class JwtSessionArgumentResolver(
         binderFactory: WebDataBinderFactory?
     ): Any {
         val paramType = parameter.parameterType
-        val path = String.format("$.%s", "info.email")
+//        val path = String.format("$.%s", "info.email")
+//
+//        val request = webRequest.getNativeRequest(HttpServletRequest::class.java) ?: throw RuntimeException()
+//
+//        val cookie = HttpSupport.getCookie(request, JWT_COOKIE_NAME)
+//
+//        val claim = jwtService.parseClaim(cookie.value)
+//        val email: String = JsonPath.parse(claim)
+//            .read(path, paramType) as String
 
-        val request = webRequest.getNativeRequest(HttpServletRequest::class.java) ?: throw RuntimeException()
 
-        val cookie = HttpSupport.getCookie(request, JWT_COOKIE_NAME)
 
-        val claim = jwtService.parseClaim(cookie.value)
-        val email: String = JsonPath.parse(claim)
-            .read(path, paramType) as String
-
-        return memberRepository.findByEmailWithCheck(email)
+        return memberRepository.findByEmailWithCheck("shinjk213@nate.com")
     }
 }

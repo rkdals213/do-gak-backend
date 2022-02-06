@@ -6,6 +6,8 @@ import com.dogak.dogakbackend.app.board.dto.BoardDetailResponse
 import com.dogak.dogakbackend.app.board.dto.BoardsResponse
 import com.dogak.dogakbackend.app.board.dto.CreateBoardRequest
 import com.dogak.dogakbackend.app.member.domain.Member
+import com.dogak.dogakbackend.app.member.domain.MemberRepository
+import com.dogak.dogakbackend.app.member.domain.findByIdWithCheck
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -13,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BoardService(
-    private val boardRepository: BoardRepository
+    private val boardRepository: BoardRepository,
+    private val memberRepository: MemberRepository
 ) {
     fun findBoards(pageable: Pageable): Page<BoardsResponse> {
         return boardRepository.findAll(pageable)
@@ -21,7 +24,10 @@ class BoardService(
     }
 
     fun findBoardDetail(id: Long): BoardDetailResponse {
-        return BoardDetailResponse(boardRepository.findByIdWithCheck(id))
+        val board = boardRepository.findByIdWithCheck(id)
+        val member = memberRepository.findByIdWithCheck(board.writerId)
+
+        return BoardDetailResponse(board, member)
     }
 
     @Transactional
