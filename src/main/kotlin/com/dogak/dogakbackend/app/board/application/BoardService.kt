@@ -5,6 +5,7 @@ import com.dogak.dogakbackend.app.board.domain.findByIdWithCheck
 import com.dogak.dogakbackend.app.board.dto.BoardDetailResponse
 import com.dogak.dogakbackend.app.board.dto.BoardsResponse
 import com.dogak.dogakbackend.app.board.dto.CreateBoardRequest
+import com.dogak.dogakbackend.app.board.dto.UpdateBoardRequest
 import com.dogak.dogakbackend.app.member.domain.Member
 import com.dogak.dogakbackend.app.member.domain.MemberRepository
 import com.dogak.dogakbackend.app.member.domain.findByIdWithCheck
@@ -35,5 +36,13 @@ class BoardService(
         val board = createBoardRequest.toEntity(member)
 
         return boardRepository.save(board).id
+    }
+
+    @Transactional
+    fun updateBoard(member: Member, boardId: Long, updateBoardRequest: UpdateBoardRequest): Long {
+        val board = boardRepository.findByIdWithCheck(boardId)
+        board.update(member, updateBoardRequest)
+
+        return board.id
     }
 }

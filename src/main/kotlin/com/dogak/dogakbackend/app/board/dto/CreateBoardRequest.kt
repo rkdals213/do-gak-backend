@@ -22,3 +22,13 @@ data class CreateBoardRequest(
         return Board(0, title, content, member.id, ProductInfo(productName, BigDecimal.valueOf(productPrice), PurchaseTime(purchaseYear, purchaseMonth)))
     }
 }
+
+data class UpdateBoardRequest(
+    @field:NotBlank
+    val title: String,
+    val content: String,
+    val productName: String,
+    val productPrice: Long,
+    val purchaseYear: Int,
+    val purchaseMonth: Month
+)

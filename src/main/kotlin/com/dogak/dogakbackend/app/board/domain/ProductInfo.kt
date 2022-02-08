@@ -1,5 +1,6 @@
 package com.dogak.dogakbackend.app.board.domain
 
+import com.dogak.dogakbackend.app.board.dto.UpdateBoardRequest
 import java.math.BigDecimal
 import javax.persistence.Column
 import javax.persistence.Embeddable
@@ -15,4 +16,10 @@ class ProductInfo(
 
     @Embedded
     var purchaseTime: PurchaseTime
-)
+) {
+    fun update(updateBoardRequest: UpdateBoardRequest) {
+        name = updateBoardRequest.productName
+        price = BigDecimal.valueOf(updateBoardRequest.productPrice)
+        purchaseTime.update(updateBoardRequest)
+    }
+}
