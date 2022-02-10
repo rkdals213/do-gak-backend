@@ -25,7 +25,7 @@ data class BoardDetailResponse(
     val content: String,
     val writerId: Long,
     val writerName: String,
-    val productInfoResponse: ProductInfoResponse
+    val productInfo: ProductInfoResponse
 ) {
     constructor(board: Board, writer: Member) : this(
         board.id,
