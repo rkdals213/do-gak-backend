@@ -32,7 +32,7 @@ class Board(
         check(writerIsEqual(member)) { "본인의 게시글만 수정할 수 있습니다" }
         title = updateBoardRequest.title
         content = updateBoardRequest.content
-        productInfo.update(updateBoardRequest)
+        productInfo.update(updateBoardRequest.productInfo)
     }
 
     private fun writerIsEqual(member: Member) = member.id == writerId

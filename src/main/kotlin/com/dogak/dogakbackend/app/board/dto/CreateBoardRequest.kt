@@ -13,13 +13,10 @@ data class CreateBoardRequest(
     @field:NotBlank
     val title: String,
     val content: String,
-    val productName: String,
-    val productPrice: Long,
-    val purchaseYear: Int,
-    val purchaseMonth: Month
+    val productInfo: ProductRequest
 ) {
     fun toEntity(member: Member): Board {
-        return Board(0, title, content, member.id, ProductInfo(productName, BigDecimal.valueOf(productPrice), PurchaseTime(purchaseYear, purchaseMonth)))
+        return Board(0, title, content, member.id, ProductInfo(productInfo.name, BigDecimal.valueOf(productInfo.price), PurchaseTime(productInfo.purchaseTime.year, productInfo.purchaseTime.month)))
     }
 }
 
@@ -27,8 +24,16 @@ data class UpdateBoardRequest(
     @field:NotBlank
     val title: String,
     val content: String,
-    val productName: String,
-    val productPrice: Long,
-    val purchaseYear: Int,
-    val purchaseMonth: Month
+    val productInfo: ProductRequest
+)
+
+data class ProductRequest(
+    val name: String,
+    val price: Long,
+    val purchaseTime: PurchaseTimeRequest
+)
+
+data class PurchaseTimeRequest(
+    val year: Int,
+    val month: Month
 )
