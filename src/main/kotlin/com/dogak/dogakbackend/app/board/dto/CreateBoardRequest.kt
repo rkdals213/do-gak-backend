@@ -16,7 +16,7 @@ data class CreateBoardRequest(
     val productInfo: ProductRequest
 ) {
     fun toEntity(member: Member): Board {
-        return Board(0, title, content, member.id, ProductInfo(productInfo.name, BigDecimal.valueOf(productInfo.price), PurchaseTime(productInfo.purchaseTime.year, productInfo.purchaseTime.month)))
+        return Board(title, content, member.id, ProductInfo(productInfo.name, BigDecimal.valueOf(productInfo.price), PurchaseTime(productInfo.purchaseTime.year, productInfo.purchaseTime.month)))
     }
 }
 
