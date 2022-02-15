@@ -2,10 +2,7 @@ package com.dogak.dogakbackend.app.board.application
 
 import com.dogak.dogakbackend.app.board.domain.BoardRepository
 import com.dogak.dogakbackend.app.board.domain.findByIdWithCheck
-import com.dogak.dogakbackend.app.board.dto.BoardDetailResponse
-import com.dogak.dogakbackend.app.board.dto.BoardsResponse
-import com.dogak.dogakbackend.app.board.dto.CreateBoardRequest
-import com.dogak.dogakbackend.app.board.dto.UpdateBoardRequest
+import com.dogak.dogakbackend.app.board.dto.*
 import com.dogak.dogakbackend.app.member.domain.Member
 import com.dogak.dogakbackend.app.member.domain.MemberRepository
 import com.dogak.dogakbackend.app.member.domain.findByIdWithCheck
@@ -19,8 +16,8 @@ class BoardService(
     private val boardRepository: BoardRepository,
     private val memberRepository: MemberRepository
 ) {
-    fun findBoards(pageable: Pageable): Page<BoardsResponse> {
-        return boardRepository.findAll(pageable)
+    fun findBoards(selectBoardRequest: SelectBoardRequest, pageable: Pageable): Page<BoardsResponse> {
+        return boardRepository.findAllByCategory(selectBoardRequest.category, pageable)
             .map { BoardsResponse(it) }
     }
 

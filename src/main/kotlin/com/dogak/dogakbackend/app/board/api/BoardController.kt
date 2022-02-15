@@ -2,6 +2,7 @@ package com.dogak.dogakbackend.app.board.api
 
 import com.dogak.dogakbackend.app.board.application.BoardService
 import com.dogak.dogakbackend.app.board.dto.CreateBoardRequest
+import com.dogak.dogakbackend.app.board.dto.SelectBoardRequest
 import com.dogak.dogakbackend.app.board.dto.UpdateBoardRequest
 import com.dogak.dogakbackend.app.member.domain.Member
 import com.dogak.dogakbackend.common.security.Authenticated
@@ -17,8 +18,8 @@ class BoardController(
 ) {
 
     @GetMapping
-    fun findBoards(pageable: Pageable): ResponseEntity<Any> {
-        val boards = boardService.findBoards(pageable)
+    fun findBoards(selectBoardRequest: SelectBoardRequest, pageable: Pageable): ResponseEntity<Any> {
+        val boards = boardService.findBoards(selectBoardRequest, pageable)
         return ResponseEntity.ok(boards)
     }
 

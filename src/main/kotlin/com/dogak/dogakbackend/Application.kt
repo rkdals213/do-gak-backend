@@ -1,5 +1,6 @@
 package com.dogak.dogakbackend
 
+import com.dogak.dogakbackend.app.board.constants.Category
 import com.dogak.dogakbackend.app.board.domain.Board
 import com.dogak.dogakbackend.app.board.domain.ProductInfo
 import com.dogak.dogakbackend.app.board.domain.PurchaseTime
@@ -41,8 +42,18 @@ class InitService(
                 val member = Member("shinjk213@nate.com", "강민형")
                 em.persist(member)
 
-                for (i in 0..100) {
-                    val board = Board("테스트 상품$i", "내용입니다$i", 1, ProductInfo("상품$i", BigDecimal.valueOf(1000), PurchaseTime(2022, Month.JANUARY)))
+                for (i in 0..29) {
+                    val board = Board("테스트 상품$i", "내용입니다$i", 1, Category.CUSTOM, ProductInfo("상품$i", BigDecimal.valueOf(1000), PurchaseTime(2022, Month.JANUARY)))
+                    em.persist(board)
+                }
+
+                for (i in 30..59) {
+                    val board = Board("테스트 상품$i", "내용입니다$i", 1, Category.READY_MADE, ProductInfo("상품$i", BigDecimal.valueOf(1000), PurchaseTime(2022, Month.JANUARY)))
+                    em.persist(board)
+                }
+
+                for (i in 60..99) {
+                    val board = Board("테스트 상품$i", "내용입니다$i", 1, Category.TRANSFER, ProductInfo("상품$i", BigDecimal.valueOf(1000), PurchaseTime(2022, Month.JANUARY)))
                     em.persist(board)
                 }
             }
