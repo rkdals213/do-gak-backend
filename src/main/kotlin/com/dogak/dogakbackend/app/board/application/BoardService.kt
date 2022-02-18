@@ -1,5 +1,6 @@
 package com.dogak.dogakbackend.app.board.application
 
+import com.dogak.dogakbackend.app.board.constants.Category
 import com.dogak.dogakbackend.app.board.domain.BoardRepository
 import com.dogak.dogakbackend.app.board.domain.findByIdWithCheck
 import com.dogak.dogakbackend.app.board.dto.*
@@ -17,6 +18,11 @@ class BoardService(
     private val memberRepository: MemberRepository
 ) {
     fun findBoards(selectBoardRequest: SelectBoardRequest, pageable: Pageable): Page<BoardsResponse> {
+        if (selectBoardRequest.category == Category.ALL) {
+            return boardRepository.findAll(pageable)
+                .map { BoardsResponse(it) }
+        }
+
         return boardRepository.findAllByCategory(selectBoardRequest.category, pageable)
             .map { BoardsResponse(it) }
     }
