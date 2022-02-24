@@ -43,6 +43,4 @@ class Board(
     }
 
     private fun writerIsEqual(member: Member) = member.id == writerId
-
-
 }
