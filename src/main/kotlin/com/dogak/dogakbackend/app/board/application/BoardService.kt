@@ -27,12 +27,15 @@ class BoardService(
             .map { BoardsResponse(it) }
     }
 
-    fun findBoardDetail(id: Long): BoardDetailResponse {
+    fun findBoardDetail(member: Member, id: Long): BoardDetailResponse {
         val board = boardRepository.findByIdWithCheck(id)
-        val member = memberRepository.findByIdWithCheck(board.writerId)
+        val writer = memberRepository.findByIdWithCheck(board.writerId)
 
-        return BoardDetailResponse(board, member)
+        return BoardDetailResponse(board, writer)
+            .also { it.isWriter = writerCheck(member, writer) }
     }
+
+    private fun writerCheck(member: Member, writer: Member) = member.id == writer.id
 
     @Transactional
     fun createBoard(member: Member, createBoardRequest: CreateBoardRequest): Long {

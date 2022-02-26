@@ -27,6 +27,8 @@ data class BoardDetailResponse(
     val writerName: String,
     val productInfo: ProductInfoResponse
 ) {
+    var isWriter: Boolean = false
+
     constructor(board: Board, writer: Member) : this(
         board.id,
         board.title,

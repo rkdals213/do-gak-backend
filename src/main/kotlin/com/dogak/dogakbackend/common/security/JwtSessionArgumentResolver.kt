@@ -26,7 +26,7 @@ class JwtSessionArgumentResolver(
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
-    ): Any {
+    ): Any? {
         val paramType = parameter.parameterType
 //        val path = String.format("$.%s", "info.email")
 //
@@ -40,6 +40,6 @@ class JwtSessionArgumentResolver(
 
 
 
-        return memberRepository.findByEmailWithCheck("shinjk213@nate.com")
+        return memberRepository.findByEmail("shinjk213@nate.com")
     }
 }

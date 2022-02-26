@@ -24,8 +24,8 @@ class BoardController(
     }
 
     @GetMapping("/{boardId}")
-    fun findBoardDetail(@PathVariable boardId: Long): ResponseEntity<Any> {
-        val board = boardService.findBoardDetail(boardId)
+    fun findBoardDetail(@MemberClaim member: Member, @PathVariable boardId: Long): ResponseEntity<Any> {
+        val board = boardService.findBoardDetail(member, boardId)
         return ResponseEntity.ok(board)
     }
 
