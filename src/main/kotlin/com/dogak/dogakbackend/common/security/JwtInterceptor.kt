@@ -45,5 +45,4 @@ class JwtInterceptor(private val jwtService: JwtService, private val COOKIE_KEY:
             throw IllegalAccessException()
         }
     }
-
 }

@@ -63,7 +63,10 @@ class DefaultJwtService : JwtService {
 
     private fun parseJwt(token: String): String? {
         return try {
-            val claims: Jws<Claims> = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token)
+            val claims: Jws<Claims> = Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
             jsonMapper.writeValueAsString(claims.body)
         } catch (e: Exception) {
             null
