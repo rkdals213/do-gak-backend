@@ -36,9 +36,4 @@ class WebConfig(
     fun jwtInterceptor(): JwtInterceptor {
         return JwtInterceptor(jwtService)
     }
-
-    companion object {
-        const val JWT_COOKIE_NAME = "my.test.jwt"
-        const val EXPIRATION = 60 * 60 * 24
-    }
 }

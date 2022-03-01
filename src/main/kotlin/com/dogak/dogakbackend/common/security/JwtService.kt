@@ -19,8 +19,12 @@ interface JwtService {
     fun parseClaim(token: String): String
 }
 
+const val TWELVE_HOURS_IN_MILLISECONDS: Long = 1000 * 60 * 60 * 12
+
 @Component
-class DefaultJwtService : JwtService {
+class DefaultJwtService(
+    private val expirationInMilliseconds: Long = TWELVE_HOURS_IN_MILLISECONDS
+) : JwtService {
     private val jsonMapper = ObjectMapper()
 
     private val secretKey: Key
@@ -33,12 +37,17 @@ class DefaultJwtService : JwtService {
             throw RuntimeException(e)
         }
 
-    override fun create(payload: Payload): String = Jwts.builder()
-        .setHeaderParam("typ", "JWT")
-        .setExpiration(Date.from(payload.exp.toInstant(ZoneOffset.UTC)))
-        .signWith(secretKey)
-        .claim("info", payload.memberPayload)
-        .compact()
+    override fun create(payload: Payload): String {
+        val now = Date()
+        val expiration = Date(now.time + expirationInMilliseconds)
+
+        return Jwts.builder()
+            .setHeaderParam("typ", "JWT")
+            .setExpiration(expiration)
+            .signWith(secretKey)
+            .claim("info", payload)
+            .compact()
+    }
 
     override fun isUsable(token: String): Boolean {
         return checkJwt(token)

@@ -2,6 +2,7 @@ package com.dogak.dogakbackend.common.security
 
 import com.dogak.dogakbackend.app.member.domain.Member
 import com.dogak.dogakbackend.app.member.domain.MemberRepository
+import com.dogak.dogakbackend.common.http.BearerHeader
 import com.jayway.jsonpath.JsonPath
 import org.springframework.core.MethodParameter
 import org.springframework.http.HttpHeaders
@@ -12,6 +13,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 
 private const val BEARER = "Bearer"
+private const val INFO_EMAIL_PATH = "info.email"
 
 @Component
 class JwtSessionArgumentResolver(
@@ -31,9 +33,9 @@ class JwtSessionArgumentResolver(
         val paramType = parameter.parameterType
         val token = extractBearerToken(webRequest) ?: return Member.dummy
 
-        val path = String.format("$.%s", "info.email")
+        val path = String.format("$.%s", INFO_EMAIL_PATH)
         val claim = jwtService.parseClaim(token)
-        val email: String = JsonPath.parse(claim)
+        val email = JsonPath.parse(claim)
             .read(path, paramType) as String
 
         return memberRepository.findByEmail(email) ?: Member.dummy
@@ -41,19 +43,10 @@ class JwtSessionArgumentResolver(
 
     private fun extractBearerToken(request: NativeWebRequest): String? {
         val authorization = request.getHeader(HttpHeaders.AUTHORIZATION) ?: return null
-        val (tokenType, token) = splitToTokenFormat(authorization)
+        val (tokenType, token) = BearerHeader.splitToTokenFormat(authorization)
         if (tokenType != BEARER) {
             throw IllegalAccessException()
         }
         return token
-    }
-
-    private fun splitToTokenFormat(authorization: String): Pair<String, String> {
-        return try {
-            val tokenFormat = authorization.split(" ")
-            tokenFormat[0] to tokenFormat[1]
-        } catch (e: IndexOutOfBoundsException) {
-            throw IllegalAccessException()
-        }
     }
 }

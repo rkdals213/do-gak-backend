@@ -1,5 +1,6 @@
 package com.dogak.dogakbackend.common.security
 
+import com.dogak.dogakbackend.common.http.BearerHeader
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
@@ -30,19 +31,10 @@ class JwtInterceptor(private val jwtService: JwtService) : HandlerInterceptor {
 
     private fun extractBearerToken(request: HttpServletRequest): String {
         val authorization = request.getHeader(AUTHORIZATION) ?: throw IllegalAccessException()
-        val (tokenType, token) = splitToTokenFormat(authorization)
+        val (tokenType, token) = BearerHeader.splitToTokenFormat(authorization)
         if (tokenType != BEARER) {
             throw IllegalAccessException()
         }
         return token
-    }
-
-    private fun splitToTokenFormat(authorization: String): Pair<String, String> {
-        return try {
-            val tokenFormat = authorization.split(" ")
-            tokenFormat[0] to tokenFormat[1]
-        } catch (e: IndexOutOfBoundsException) {
-            throw IllegalAccessException()
-        }
     }
 }
