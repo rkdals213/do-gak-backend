@@ -1,5 +1,6 @@
 package com.dogak.dogakbackend.app.board.dto
 
+import com.dogak.dogakbackend.app.board.constants.Category
 import com.dogak.dogakbackend.app.board.domain.Board
 import com.dogak.dogakbackend.app.board.domain.ProductInfo
 import com.dogak.dogakbackend.app.board.domain.PurchaseTime
@@ -23,6 +24,7 @@ data class BoardDetailResponse(
     val id: Long,
     val title: String,
     val content: String,
+    val category: Category,
     val writerId: Long,
     val writerName: String,
     val productInfo: ProductInfoResponse
@@ -33,6 +35,7 @@ data class BoardDetailResponse(
         board.id,
         board.title,
         board.content,
+        board.category,
         writer.id,
         writer.name,
         ProductInfoResponse(board.productInfo)

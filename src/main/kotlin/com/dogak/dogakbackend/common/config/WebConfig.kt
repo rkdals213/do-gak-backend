@@ -34,7 +34,7 @@ class WebConfig(
 
     @Bean
     fun jwtInterceptor(): JwtInterceptor {
-        return JwtInterceptor(jwtService, JWT_COOKIE_NAME)
+        return JwtInterceptor(jwtService)
     }
 
     companion object {

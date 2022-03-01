@@ -2,10 +2,7 @@ package com.dogak.dogakbackend.common.security
 
 import com.dogak.dogakbackend.app.member.domain.Member
 import com.dogak.dogakbackend.app.member.domain.MemberRepository
-import com.dogak.dogakbackend.app.member.domain.findByEmailWithCheck
-import com.dogak.dogakbackend.common.config.WebConfig.Companion.JWT_COOKIE_NAME
 import com.jayway.jsonpath.JsonPath
-import io.jsonwebtoken.Jwts
 import org.springframework.core.MethodParameter
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
@@ -13,7 +10,6 @@ import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
-import javax.servlet.http.HttpServletRequest
 
 private const val BEARER = "Bearer"
 
@@ -33,14 +29,14 @@ class JwtSessionArgumentResolver(
         binderFactory: WebDataBinderFactory?
     ): Any {
         val paramType = parameter.parameterType
-        val token = extractBearerToken(webRequest) ?: return Member(0, "", "")
+        val token = extractBearerToken(webRequest) ?: return Member(-1, "", "")
 
         val path = String.format("$.%s", "info.email")
         val claim = jwtService.parseClaim(token)
         val email: String = JsonPath.parse(claim)
             .read(path, paramType) as String
 
-        return memberRepository.findByEmail(email) ?: Member(0, "", "")
+        return memberRepository.findByEmail(email) ?: Member(-1, "", "")
     }
 
     private fun extractBearerToken(request: NativeWebRequest): String? {

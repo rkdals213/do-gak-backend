@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse
 
 private const val BEARER = "Bearer"
 
-class JwtInterceptor(private val jwtService: JwtService, private val COOKIE_KEY: String) : HandlerInterceptor {
+class JwtInterceptor(private val jwtService: JwtService) : HandlerInterceptor {
     override fun preHandle(
         request: HttpServletRequest,
         response: HttpServletResponse,
