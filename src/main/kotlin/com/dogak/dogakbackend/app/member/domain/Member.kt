@@ -1,6 +1,7 @@
 package com.dogak.dogakbackend.app.member.domain
 
 import com.dogak.dogakbackend.app.member.dto.ChangeMemberName
+import com.dogak.dogakbackend.app.member.dto.KakaoMemberInfo
 import com.dogak.dogakbackend.common.infra.TableTimeStamp
 import com.dogak.dogakbackend.common.security.MemberPayload
 import javax.persistence.*
@@ -25,5 +26,14 @@ class Member(
 
     fun changeName(changeMemberName: ChangeMemberName) {
         name = changeMemberName.name
+    }
+
+    fun validateLoginInfo(kakaoMemberInfo: KakaoMemberInfo) {
+        require(email == kakaoMemberInfo.kakao_account.email) { "로그인 정보가 일치하지 않습니다" }
+    }
+
+    companion object {
+        val dummy: Member
+            get() = Member(-1, "", "")
     }
 }

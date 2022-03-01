@@ -29,7 +29,14 @@ class Board(
 ) {
     val tableTimeStamp: TableTimeStamp = TableTimeStamp()
 
-    constructor(title: String, content: String, writerId: Long, category: Category, productInfo: ProductInfo) : this(0, title, content, writerId, category, productInfo)
+    constructor(title: String, content: String, writerId: Long, category: Category, productInfo: ProductInfo) : this(
+        0,
+        title,
+        content,
+        writerId,
+        category,
+        productInfo
+    )
 
     init {
         require(category != Category.ALL) { "카테고리는 전체로 설정할 수 없습니다" }

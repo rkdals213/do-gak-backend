@@ -1,7 +1,7 @@
 package com.dogak.dogakbackend.app.member.api
 
 import com.dogak.dogakbackend.app.member.application.MemberService
-import com.dogak.dogakbackend.app.member.dto.KakaoLoginPayload
+import com.dogak.dogakbackend.app.member.dto.KakaoAccessToken
 import com.dogak.dogakbackend.common.security.CookieManager
 import com.dogak.dogakbackend.common.security.DefaultJwtService
 import org.springframework.http.ResponseEntity
@@ -18,11 +18,9 @@ class SessionController(
     private val cookieManager: CookieManager
 ) {
     @PostMapping("/login")
-    fun login(@RequestBody kakaoLoginPayload: KakaoLoginPayload, req: HttpServletRequest, res: HttpServletResponse): ResponseEntity<Any> {
-        val payload = memberService.login(kakaoLoginPayload)
+    fun login(@RequestBody kakaoAccessToken: KakaoAccessToken, req: HttpServletRequest, res: HttpServletResponse): ResponseEntity<Any> {
+        val payload = memberService.login(kakaoAccessToken)
         val token = defaultJwtService.create(payload)
-
-//        cookieManager.setCookie(token, req, res)
 
         return ResponseEntity.ok(token)
     }

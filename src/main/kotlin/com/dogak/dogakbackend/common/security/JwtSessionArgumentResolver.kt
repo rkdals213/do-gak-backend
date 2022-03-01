@@ -29,14 +29,14 @@ class JwtSessionArgumentResolver(
         binderFactory: WebDataBinderFactory?
     ): Any {
         val paramType = parameter.parameterType
-        val token = extractBearerToken(webRequest) ?: return Member(-1, "", "")
+        val token = extractBearerToken(webRequest) ?: return Member.dummy
 
         val path = String.format("$.%s", "info.email")
         val claim = jwtService.parseClaim(token)
         val email: String = JsonPath.parse(claim)
             .read(path, paramType) as String
 
-        return memberRepository.findByEmail(email) ?: Member(-1, "", "")
+        return memberRepository.findByEmail(email) ?: Member.dummy
     }
 
     private fun extractBearerToken(request: NativeWebRequest): String? {

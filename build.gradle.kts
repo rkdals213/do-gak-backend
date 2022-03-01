@@ -32,7 +32,8 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
-    implementation("com.jayway.jsonpath:json-path:2.6.0")
+    implementation("com.jayway.jsonpath:json-path:2.7.0")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.1")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
