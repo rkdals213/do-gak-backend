@@ -3,7 +3,6 @@ package com.dogak.dogakbackend.common.security
 import com.dogak.dogakbackend.app.member.domain.Member
 import com.dogak.dogakbackend.app.member.domain.MemberRepository
 import com.dogak.dogakbackend.common.http.BearerHeader
-import com.jayway.jsonpath.JsonPath
 import org.springframework.core.MethodParameter
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
@@ -17,7 +16,7 @@ private const val INFO_EMAIL_PATH = "info.email"
 
 @Component
 class JwtSessionArgumentResolver(
-    private val jwtService: JwtService,
+    private val jwtTokenProvider: JwtTokenProvider,
     private val memberRepository: MemberRepository
 ) : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
@@ -30,13 +29,9 @@ class JwtSessionArgumentResolver(
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any {
-        val paramType = parameter.parameterType
         val token = extractBearerToken(webRequest) ?: return Member.dummy
 
-        val path = String.format("$.%s", INFO_EMAIL_PATH)
-        val claim = jwtService.parseClaim(token)
-        val email = JsonPath.parse(claim)
-            .read(path, paramType) as String
+        val email = jwtTokenProvider.getEmail(token)
 
         return memberRepository.findByEmail(email) ?: Member.dummy
     }

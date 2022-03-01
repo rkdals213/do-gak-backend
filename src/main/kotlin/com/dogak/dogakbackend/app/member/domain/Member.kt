@@ -3,7 +3,6 @@ package com.dogak.dogakbackend.app.member.domain
 import com.dogak.dogakbackend.app.member.dto.ChangeMemberName
 import com.dogak.dogakbackend.app.member.dto.KakaoMemberInfo
 import com.dogak.dogakbackend.common.infra.TableTimeStamp
-import com.dogak.dogakbackend.common.security.Payload
 import javax.persistence.*
 
 @Entity
@@ -21,8 +20,6 @@ class Member(
     val tableTimeStamp: TableTimeStamp = TableTimeStamp()
 
     constructor(email: String, name: String) : this(0, email, name)
-
-    fun payload(): Payload = Payload(id, email, name)
 
     fun changeName(changeMemberName: ChangeMemberName) {
         name = changeMemberName.name

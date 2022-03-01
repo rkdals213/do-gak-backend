@@ -5,7 +5,6 @@ import com.dogak.dogakbackend.app.member.domain.Member
 import com.dogak.dogakbackend.app.member.dto.ChangeMemberName
 import com.dogak.dogakbackend.app.member.dto.MemberInfo
 import com.dogak.dogakbackend.common.security.Authenticated
-import com.dogak.dogakbackend.common.security.DefaultJwtService
 import com.dogak.dogakbackend.common.security.MemberClaim
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,8 +14,7 @@ import javax.servlet.http.HttpServletResponse
 @RestController
 @RequestMapping("/member")
 class MemberController(
-    private val memberService: MemberService,
-    private val defaultJwtService: DefaultJwtService
+    private val memberService: MemberService
 ) {
 
     @Authenticated
@@ -28,8 +26,7 @@ class MemberController(
     @Authenticated
     @PatchMapping("/name")
     fun changeName(@MemberClaim member: Member, @RequestBody changeMemberName: ChangeMemberName, req: HttpServletRequest, res: HttpServletResponse): ResponseEntity<Any> {
-        val payload = memberService.changeName(member, changeMemberName)
-        val token = defaultJwtService.create(payload)
+        val token = memberService.generateTokenByChangeName(member, changeMemberName)
 
         return ResponseEntity.ok(token)
     }

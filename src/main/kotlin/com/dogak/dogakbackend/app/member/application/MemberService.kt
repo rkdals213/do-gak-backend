@@ -7,22 +7,23 @@ import com.dogak.dogakbackend.app.member.dto.KakaoAccessToken
 import com.dogak.dogakbackend.app.member.dto.KakaoMemberInfo
 import com.dogak.dogakbackend.common.http.BearerHeader
 import com.dogak.dogakbackend.common.http.KakaoClient
-import com.dogak.dogakbackend.common.security.Payload
+import com.dogak.dogakbackend.common.security.JwtTokenProvider
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MemberService(
     private val memberRepository: MemberRepository,
-    private val kakaoClient: KakaoClient
+    private val kakaoClient: KakaoClient,
+    private val jwtTokenProvider: JwtTokenProvider
 ) {
     @Transactional
-    fun login(kakaoAccessToken: KakaoAccessToken): Payload {
+    fun generateTokenByLogin(kakaoAccessToken: KakaoAccessToken): String {
         val kakaoMemberInfo = kakaoClient.getUserInfo(BearerHeader.of(kakaoAccessToken.accessToken))
         val member = findMemberOrRegister(kakaoMemberInfo)
         member.validateLoginInfo(kakaoMemberInfo)
 
-        return member.payload()
+        return jwtTokenProvider.createToken(member.email)
     }
 
     private fun findMemberOrRegister(kakaoMemberInfo: KakaoMemberInfo): Member {
@@ -30,8 +31,8 @@ class MemberService(
     }
 
     @Transactional
-    fun changeName(member: Member, changeMemberName: ChangeMemberName): Payload {
+    fun generateTokenByChangeName(member: Member, changeMemberName: ChangeMemberName): String {
         member.changeName(changeMemberName)
-        return member.payload()
+        return jwtTokenProvider.createToken(member.email)
     }
 }

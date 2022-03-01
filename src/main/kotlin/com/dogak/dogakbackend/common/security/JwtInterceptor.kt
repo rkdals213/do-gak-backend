@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse
 
 private const val BEARER = "Bearer"
 
-class JwtInterceptor(private val jwtService: JwtService) : HandlerInterceptor {
+class JwtInterceptor(private val jwtTokenProvider: JwtTokenProvider) : HandlerInterceptor {
     override fun preHandle(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -21,7 +21,7 @@ class JwtInterceptor(private val jwtService: JwtService) : HandlerInterceptor {
 
         val token = extractBearerToken(request)
 
-        return jwtService.isUsable(token)
+        return jwtTokenProvider.isValidToken(token)
     }
 
     private fun isAuthenticationPresent(handler: HandlerMethod): Boolean {
