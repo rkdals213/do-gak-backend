@@ -43,7 +43,7 @@ class JwtTokenProvider(
         }
     }
 
-    private fun getClaimsJws(token: String) = Jwts.parserBuilder()
+    private fun getClaimsJws(token: String): Jws<Claims> = Jwts.parserBuilder()
         .setSigningKey(signingKey.encoded)
         .build()
         .parseClaimsJws(token)
