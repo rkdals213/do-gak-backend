@@ -29,11 +29,11 @@ class JwtSessionArgumentResolver(
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any {
-        val token = extractBearerToken(webRequest) ?: return Member.dummy
+        val token = extractBearerToken(webRequest) ?: return Member.DUMMY
 
         val email = jwtTokenProvider.getEmail(token)
 
-        return memberRepository.findByEmail(email) ?: Member.dummy
+        return memberRepository.findByEmail(email) ?: Member.DUMMY
     }
 
     private fun extractBearerToken(request: NativeWebRequest): String? {

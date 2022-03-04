@@ -30,7 +30,7 @@ class Member(
     }
 
     companion object {
-        val dummy: Member
+        val DUMMY: Member
             get() = Member(-1, "", "")
     }
 }
