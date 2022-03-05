@@ -25,7 +25,7 @@ class CommentService(
 
         return comments.map { comment ->
             CommentResponse(comment, writer).also { commentResponse ->
-                commentResponse.isWriter = writer.isEquals(member)
+                commentResponse.isWriter = comment.writerIsEqual(member)
             }
         }
     }

@@ -27,6 +27,8 @@ class Board(
     @Embedded
     var productInfo: ProductInfo
 ) {
+    val buyerInformation: BuyerInformation = BuyerInformation()
+
     val tableTimeStamp: TableTimeStamp = TableTimeStamp()
 
     constructor(title: String, content: String, writerId: Long, category: Category, productInfo: ProductInfo) : this(
@@ -49,5 +51,11 @@ class Board(
         productInfo.update(updateBoardRequest.productInfo)
     }
 
-    private fun writerIsEqual(member: Member) = member.id == writerId
+    fun reserve(buyerId: Long) = buyerInformation.reserve(buyerId)
+
+    fun done() = buyerInformation.done()
+
+    fun cancelReservation() = buyerInformation.cancelReservation()
+
+    fun writerIsEqual(member: Member) = member.id == writerId
 }

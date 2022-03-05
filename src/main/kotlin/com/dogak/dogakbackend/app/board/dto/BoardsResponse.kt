@@ -1,6 +1,7 @@
 package com.dogak.dogakbackend.app.board.dto
 
 import com.dogak.dogakbackend.app.board.constants.Category
+import com.dogak.dogakbackend.app.board.constants.Status
 import com.dogak.dogakbackend.app.board.domain.Board
 import com.dogak.dogakbackend.app.board.domain.ProductInfo
 import com.dogak.dogakbackend.app.board.domain.PurchaseTime
@@ -11,12 +12,14 @@ import java.time.Month
 data class BoardsResponse(
     val id: Long,
     val title: String,
-    val content: String
+    val content: String,
+    val status: Status
 ) {
     constructor(board: Board) : this(
         board.id,
         board.title,
-        board.content
+        board.content,
+        board.buyerInformation.status
     )
 }
 
@@ -27,7 +30,8 @@ data class BoardDetailResponse(
     val category: Category,
     val writerId: Long,
     val writerName: String,
-    val productInfo: ProductInfoResponse
+    val productInfo: ProductInfoResponse,
+    val status: Status
 ) {
     var isWriter: Boolean = false
 
@@ -38,7 +42,8 @@ data class BoardDetailResponse(
         board.category,
         writer.id,
         writer.name,
-        ProductInfoResponse(board.productInfo)
+        ProductInfoResponse(board.productInfo),
+        board.buyerInformation.status
     )
 }
 

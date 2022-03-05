@@ -1,6 +1,5 @@
 package com.dogak.dogakbackend.app.board.domain
 
-import com.dogak.dogakbackend.app.board.dto.UpdateBoardRequest
 import com.dogak.dogakbackend.app.board.dto.UpdateCommentRequest
 import com.dogak.dogakbackend.app.member.domain.Member
 import com.dogak.dogakbackend.common.infra.TableTimeStamp
@@ -28,5 +27,5 @@ class Comment(
         content = updateCommentRequest.comment
     }
 
-    private fun writerIsEqual(member: Member) = member.id == writerId
+    fun writerIsEqual(member: Member) = member.id == writerId
 }

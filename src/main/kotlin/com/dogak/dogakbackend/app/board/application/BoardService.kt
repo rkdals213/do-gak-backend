@@ -32,7 +32,7 @@ class BoardService(
         val writer = memberRepository.findByIdWithCheck(board.writerId)
 
         return BoardDetailResponse(board, writer)
-            .also { it.isWriter = writer.isEquals(member) }
+            .also { it.isWriter = board.writerIsEqual(member) }
     }
 
     @Transactional
