@@ -18,19 +18,17 @@ class CommentService(
     private val memberRepository: MemberRepository
 ) {
 
-    fun findCommentOfBoard(member: Member, boardId: Long): List<CommentResponse> {
+    fun findCommentsOfBoard(member: Member, boardId: Long): List<CommentResponse> {
         val board = boardRepository.findByIdWithCheck(boardId)
         val comments = commentRepository.findByBoard(board)
         val writer = memberRepository.findByIdWithCheck(board.writerId)
 
         return comments.map { comment ->
             CommentResponse(comment, writer).also { commentResponse ->
-                commentResponse.isWriter = writerCheck(member, writer)
+                commentResponse.isWriter = writer.isEquals(member)
             }
         }
     }
-
-    private fun writerCheck(member: Member, writer: Member) = member.id == writer.id
 
     @Transactional
     fun updateComment(member: Member, commentId: Long, updateCommentRequest: UpdateCommentRequest): Long {

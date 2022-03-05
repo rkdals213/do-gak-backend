@@ -29,6 +29,8 @@ class Member(
         require(email == kakaoMemberInfo.kakao_account.email) { "로그인 정보가 일치하지 않습니다" }
     }
 
+    fun isEquals(member: Member) = id == member.id
+
     companion object {
         val DUMMY: Member
             get() = Member(-1, "", "")

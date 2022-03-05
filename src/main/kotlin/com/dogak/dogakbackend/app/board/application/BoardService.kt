@@ -32,10 +32,8 @@ class BoardService(
         val writer = memberRepository.findByIdWithCheck(board.writerId)
 
         return BoardDetailResponse(board, writer)
-            .also { it.isWriter = writerCheck(member, writer) }
+            .also { it.isWriter = writer.isEquals(member) }
     }
-
-    private fun writerCheck(member: Member, writer: Member) = member.id == writer.id
 
     @Transactional
     fun createBoard(member: Member, createBoardRequest: CreateBoardRequest): Long {

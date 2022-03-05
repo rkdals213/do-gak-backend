@@ -15,7 +15,7 @@ class CommentController(
 ) {
     @GetMapping("/board/{boardId}")
     fun findCommentsOfBoard(@MemberClaim member: Member, @PathVariable boardId: Long): ResponseEntity<Any> {
-        val comments = commentService.findCommentOfBoard(member, boardId)
+        val comments = commentService.findCommentsOfBoard(member, boardId)
         return ResponseEntity.ok(comments)
     }
 
