@@ -2,6 +2,7 @@ package com.dogak.dogakbackend.common.security
 
 import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
+import io.jsonwebtoken.security.SignatureException
 import org.springframework.stereotype.Component
 import java.util.*
 import javax.crypto.SecretKey
@@ -39,6 +40,8 @@ class JwtTokenProvider(
         } catch (e: IllegalArgumentException) {
             false
         } catch (e: ExpiredJwtException) {
+            false
+        } catch (e: SignatureException) {
             false
         }
     }
