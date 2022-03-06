@@ -27,6 +27,10 @@ class JwtTokenProvider(
     }
 
     fun getEmail(token: String): String {
+        if (isValidToken(token).not()) {
+            throw RuntimeException("로그인 정보가 정확하지 않습니다")
+        }
+
         return getClaimsJws(token).body[CLAIM_EMAIL]
             .toString()
     }

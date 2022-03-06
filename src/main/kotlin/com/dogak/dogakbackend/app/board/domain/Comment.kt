@@ -22,6 +22,13 @@ class Comment(
 ) {
     val tableTimeStamp: TableTimeStamp = TableTimeStamp()
 
+    constructor(content: String, board: Board, writerId: Long) : this(
+        0,
+        content,
+        board,
+        writerId
+    )
+
     fun update(member: Member, updateCommentRequest: UpdateCommentRequest) {
         check(writerIsEqual(member)) { "본인의 게시글만 수정할 수 있습니다" }
         content = updateCommentRequest.comment

@@ -2,6 +2,7 @@ package com.dogak.dogakbackend
 
 import com.dogak.dogakbackend.app.board.constants.Category
 import com.dogak.dogakbackend.app.board.domain.Board
+import com.dogak.dogakbackend.app.board.domain.Comment
 import com.dogak.dogakbackend.app.board.domain.ProductInfo
 import com.dogak.dogakbackend.app.board.domain.PurchaseTime
 import com.dogak.dogakbackend.app.member.domain.Member
@@ -49,7 +50,13 @@ class InitService(
 
                 for (i in 0..29) {
                     val board = Board("테스트 상품$i", "내용입니다$i", 1, Category.CUSTOM, ProductInfo("상품$i", BigDecimal.valueOf(1000), PurchaseTime(2022, Month.JANUARY)))
+                    val comment1 = Comment("댓글 1", board, member.id)
+                    val comment2 = Comment("댓글 2", board, member.id)
+                    val comment3 = Comment("댓글 3", board, member2.id)
                     em.persist(board)
+                    em.persist(comment1)
+                    em.persist(comment2)
+                    em.persist(comment3)
                 }
 
                 for (i in 30..59) {

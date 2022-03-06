@@ -31,10 +31,6 @@ class JwtSessionArgumentResolver(
     ): Any {
         val token = extractBearerToken(webRequest) ?: return Member.DUMMY
 
-        if (jwtTokenProvider.isValidToken(token).not()) {
-            throw RuntimeException("로그인 정보가 정확하지 않습니다")
-        }
-
         val email = jwtTokenProvider.getEmail(token)
 
         return memberRepository.findByEmail(email) ?: Member.DUMMY
