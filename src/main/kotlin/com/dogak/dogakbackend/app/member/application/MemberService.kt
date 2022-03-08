@@ -6,7 +6,7 @@ import com.dogak.dogakbackend.app.member.dto.ChangeMemberName
 import com.dogak.dogakbackend.app.member.dto.KakaoAccessToken
 import com.dogak.dogakbackend.app.member.dto.KakaoMemberInfo
 import com.dogak.dogakbackend.common.http.BearerHeader
-import com.dogak.dogakbackend.common.http.KakaoClient
+import com.dogak.dogakbackend.app.member.domain.KakaoClient
 import com.dogak.dogakbackend.common.security.JwtTokenProvider
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

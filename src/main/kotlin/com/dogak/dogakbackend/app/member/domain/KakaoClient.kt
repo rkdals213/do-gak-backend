@@ -1,4 +1,4 @@
-package com.dogak.dogakbackend.common.http
+package com.dogak.dogakbackend.app.member.domain
 
 import com.dogak.dogakbackend.app.member.dto.KakaoMemberInfo
 import org.springframework.cloud.openfeign.FeignClient
