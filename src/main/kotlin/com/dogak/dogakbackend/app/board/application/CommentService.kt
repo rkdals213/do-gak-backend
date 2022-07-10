@@ -26,8 +26,8 @@ class CommentService(
         val writer = memberRepository.findByIdWithCheck(board.writerId)
 
         return comments.map { comment ->
-            CommentResponse(comment, writer).also { commentResponse ->
-                commentResponse.isWriter = comment.writerIsEqual(member)
+            CommentResponse(comment, writer).apply {
+                isWriter = comment.writerIsEqual(member)
             }
         }
     }

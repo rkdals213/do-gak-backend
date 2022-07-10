@@ -27,8 +27,10 @@ class Board(
     @Embedded
     var productInfo: ProductInfo
 ) {
+    @Embedded
     val buyerInformation: BuyerInformation = BuyerInformation()
 
+    @Embedded
     val tableTimeStamp: TableTimeStamp = TableTimeStamp()
 
     constructor(title: String, content: String, writerId: Long, category: Category, productInfo: ProductInfo) : this(
